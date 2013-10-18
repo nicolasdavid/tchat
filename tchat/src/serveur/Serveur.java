@@ -51,7 +51,7 @@ public class Serveur implements Function{
                return "l'utilisateur s'est déconnecté"; //rajouter son nom et son id
            case "who":
                String listUsers = new String();
-               for(String idUser : this.listeCorrespondance.keySet()){
+               for(String idUser : this.listCorrespondance.keySet()){
                    listUsers+=idUser;
                }
                return listUsers; //liste des personnes présentent dans la hashmap
