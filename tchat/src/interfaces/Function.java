@@ -4,6 +4,8 @@
  */
 package interfaces;
 
+import exception.UnloggedUserException;
+
 /**
  *
  * @author Nicolas
@@ -16,7 +18,14 @@ public interface Function {
      * @return 
      */
     public String request(String id);
-    
-    public String getMessage();
+    /**
+     * Method giving the list of new messages
+     * @param id
+     * 		Id of the user who do the request
+     * @return
+     * 		The list of messages
+     * @throws UnloggedUserException 
+     */
+    public String[] getMessage(String id) throws UnloggedUserException;
     
 }
