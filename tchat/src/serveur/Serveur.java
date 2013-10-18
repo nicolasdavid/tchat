@@ -4,6 +4,7 @@
  */
 package serveur;
 
+import exception.BadRequest;
 import interfaces.Function;
 
 import java.util.ArrayList;
@@ -34,21 +35,48 @@ public class Serveur implements Function{
         Serveur serv = new Serveur();
     }
 
-    @Override
-    public String request(String str) {
+    
+    public String request(String str) throws BadRequest{
         char parseChar = ' ';
-        int indiceToParse;
-        indiceToParse = str.indexOf(parseChar);
+        int indiceToParseREQ;
+        int indiceToParseID;
         
-        String subStr = str.substring(0, indiceToParse);
+        indiceToParseREQ = str.indexOf(parseChar); 
+        String subStrA;
+        String subStrBC;
+        String subStrB;
+        String subStrC;
         
-        switch (subStr){
+        if(indiceToParseREQ==-1){
+            subStrA = str;
+            subStrBC="";
+        }
+        else {
+            subStrA = str.substring(0, indiceToParseREQ); 
+            subStrBC = str.substring(indiceToParseREQ+1); 
+        }
+        
+        indiceToParseID = subStrBC.indexOf(parseChar);
+
+        if (indiceToParseID == -1){
+            subStrB=subStrBC;
+            subStrC="";
+        }
+        else {
+            subStrB = subStrBC.substring(indiceToParseREQ+1, indiceToParseID); 
+            subStrC = subStrBC.substring(indiceToParseID+1);
+        }
+      
+        switch (subStrA){
            case "connect":
-                return "l'utilisateur s'est connecté"; //rajouter son nom et son id
+               //TODO if B empty throws exception
+                return "the user " +subStrB+ " is connected"; //TODO test sur subStrB vérifier que la requete est bonne
            case "send":
-               return "message envoyé"; //rajouter le message
+               //TODO if B||C empty throws exception
+               return "message send";
            case "bye":
-               return "l'utilisateur s'est déconnecté"; //rajouter son nom et son id
+               //TODO if B empty throws exception
+               return "l'utilisateur "+subStrB+" s'est déconnecté"; //rajouter son nom et son id
            case "who":
                String listUsers = new String();
                for(String idUser : this.listCorrespondance.keySet()){
@@ -56,7 +84,8 @@ public class Serveur implements Function{
                }
                return listUsers; //liste des personnes présentent dans la hashmap
            default:
-               return""; 
+               throw new BadRequest("The request "+ subStrA +" does not exist ! Try another one please.");
+               
         }
         
     }

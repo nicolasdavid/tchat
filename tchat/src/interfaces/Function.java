@@ -4,6 +4,7 @@
  */
 package interfaces;
 
+import exception.BadRequest;
 import exception.UnloggedUserException;
 
 /**
@@ -17,7 +18,7 @@ public interface Function {
      * @param id
      * @return 
      */
-    public String request(String id);
+    public String request(String id) throws BadRequest;
     /**
      * Method giving the list of new messages
      * @param id

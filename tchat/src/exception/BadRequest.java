@@ -1,8 +1,8 @@
 package exception;
 
-public class UnloggedUserException extends Exception{
+public class BadRequest extends Exception{
         
-	public UnloggedUserException(){
+	public BadRequest(){
 		
 	}
 /**
@@ -10,7 +10,7 @@ public class UnloggedUserException extends Exception{
  * @param message
  * 		Details about the exception
  */
-	public UnloggedUserException(String message){
+	public BadRequest(String message){
 		super(message);
 	}
 /**
@@ -18,7 +18,7 @@ public class UnloggedUserException extends Exception{
  * @param cause
  * 		Cause of the Exception
  */
-	public UnloggedUserException(Throwable cause){
+	public BadRequest(Throwable cause){
 		super(cause);
 	}
 /**
@@ -28,7 +28,7 @@ public class UnloggedUserException extends Exception{
  * @param cause
  * 		Cause of the Exception
  */
-	public UnloggedUserException(String message, Throwable cause){
+	public BadRequest(String message, Throwable cause){
 		super(message, cause);
 	}
 }
