@@ -31,8 +31,30 @@ public class Serveur implements Function{
     }
 
     @Override
-    public String request(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String request(String str) {
+        char parseChar = ' ';
+        int indiceToParse;
+        indiceToParse = str.indexOf(parseChar);
+        
+        String subStr = str.substring(0, indiceToParse);
+        
+        switch (subStr){
+           case "connect":
+                return "l'utilisateur s'est connecté"; //rajouter son nom et son id
+           case "send":
+               return "message envoyé"; //rajouter le message
+           case "bye":
+               return "l'utilisateur s'est déconnecté"; //rajouter son nom et son id
+           case "who":
+               String listUsers = new String();
+               for(String idUser : this.listeCorrespondance.keySet()){
+                   listUsers+=idUser;
+               }
+               return listUsers; //liste des personnes présentent dans la hashmap
+           default:
+               return""; 
+        }
+        
     }
 
     @Override
