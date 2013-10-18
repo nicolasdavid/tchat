@@ -35,7 +35,7 @@ public class Serveur implements Function{
         Serveur serv = new Serveur();
         
         //Test
-        
+        try{
         //Connection of diferents users
         serv.request("connect Loutrosky");
         serv.request("connect GitanEnCaravane");
@@ -57,6 +57,10 @@ public class Serveur implements Function{
         //Quit
         serv.request("quit GitanEnCaravane");
         serv.request("quit T0t0_du_44");
+        }
+        catch(Exception e){
+            
+        }
     }
 
     
