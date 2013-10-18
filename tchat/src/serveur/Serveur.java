@@ -33,6 +33,30 @@ public class Serveur implements Function{
     
     public static void main(String[] args){
         Serveur serv = new Serveur();
+        
+        //Test
+        
+        //Connection of diferents users
+        serv.request("connect Loutrosky");
+        serv.request("connect GitanEnCaravane");
+        serv.request("connect T0t0_du_44");
+        
+        //Sending messages
+        serv.request("send Loutrosky Je suis une loutre bien grasse");
+        serv.request("send T0t0_du_44 Et tuaimes ça!!!");
+        serv.request("send GitanEnCaravane tu t'appellerais pas Sébastien par hasard ?");
+        
+        //Quit
+        serv.request("quit Loutrosky");
+        
+        //Sending messages
+        serv.request("send T0t0_du_44 Tu l'as vexé...");
+        serv.request("send GitanEnCaravane Quelle tata celui-la");
+        serv.request("send GitanEnCaravane Bon je m'en vais");
+        
+        //Quit
+        serv.request("quit GitanEnCaravane");
+        serv.request("quit T0t0_du_44");
     }
 
     
