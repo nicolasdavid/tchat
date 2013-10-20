@@ -26,7 +26,8 @@ public interface Function {
      * @return
      * 		The list of messages
      * @throws UnloggedUserException 
+     * @throws BadRequest 
      */
-    public String[] getMessage(String id) throws UnloggedUserException;
+    public String[] getMessage(String id) throws UnloggedUserException, BadRequest;
     
 }

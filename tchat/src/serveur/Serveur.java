@@ -49,8 +49,12 @@ public class Serveur implements Function{
         //Sending messages
         
         System.out.println(serv.request("send Loutrosky Je suis une loutre bien grasse"));
-        System.out.println(serv.request("send T0t0_du_44 Et tuaimes ça!!!"));
+        System.out.println(serv.request("send T0t0_du_44 Et tu aimes ça!!!"));
         System.out.println(serv.request("send GitanEnCaravane tu t'appellerais pas Sébastien par hasard ?"));
+        String[]str = serv.getMessage("GitanEnCaravane");
+        for(int i = 0; i<str.length; i++){
+        	System.out.println(str[i]);
+        }
         
         //Quit
         System.out.println(serv.request("bye Loutrosky"));
@@ -58,15 +62,19 @@ public class Serveur implements Function{
         //Sending messages
         System.out.println(serv.request("send T0t0_du_44 Tu l'as vexé..."));
         System.out.println(serv.request("send GitanEnCaravane Quelle tata celui-la"));
+        str = serv.getMessage("T0t0_du_44");
+        for(int i = 0; i<str.length; i++){
+        	System.out.println(str[i]);
+        }
         System.out.println(serv.request("send GitanEnCaravane Bon je m'en vais"));
+        str = serv.getMessage("GitanEnCaravane");
+        for(int i = 0; i<str.length; i++){
+        	System.out.println(str[i]);
+        }
         
         //Quit
         System.out.println(serv.request("bye GitanEnCaravane"));
         System.out.println(serv.request("bye T0t0_du_44"));
-        
-        for (String s : serv.listMessages){
-            System.out.println(s);
-            }
         }
         catch(Exception e){
             System.out.println("erreur " + e.getMessage());
@@ -175,7 +183,7 @@ public class Serveur implements Function{
     }
 
     @Override
-    public String[] getMessage(String id) throws UnloggedUserException {
+    public String[] getMessage(String id) throws UnloggedUserException, BadRequest {
     	String[] messages=null;
 	
 		if(listCorrespondance.get(id)==null){
@@ -183,12 +191,18 @@ public class Serveur implements Function{
 		}
 		else{
 	    	int i = listCorrespondance.get(id);
-	    	//Creation of a patern string array ofthe correct size
-	    	String[] patern = new String[listMessages.size()-1-i];
-	    	//Obtention of the subList representing the new messages
-	    	List<String> subList = listMessages.subList(i, listMessages.size()-1);
-	    	//Conversion of the sublist into String array
-	    	messages=subList.toArray(patern);
+	    	if(i == listMessages.size()){
+	    		throw new BadRequest("No new messages");
+	    	}
+	    	else{
+		    	//Creation of a patern string array ofthe correct size
+		    	String[] patern = new String[listMessages.size()-1-i];
+		    	//Obtention of the subList representing the new messages
+		    	List<String> subList = listMessages.subList(i, listMessages.size());
+		    	//Conversion of the sublist into String array
+		    	messages=subList.toArray(patern);
+		    	listCorrespondance.put(id, listMessages.size());
+	    	}
 		}
     	
     	return messages;
