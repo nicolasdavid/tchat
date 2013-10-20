@@ -4,6 +4,9 @@
  */
 package interfaces;
 
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
 import exception.BadRequest;
 import exception.UnloggedUserException;
 
@@ -11,14 +14,14 @@ import exception.UnloggedUserException;
  *
  * @author Nicolas
  */
-public interface Function {
+public interface Function extends Remote {
     
     /**
      * method to connect user to the server "Call me daddy"
      * @param id
      * @return 
      */
-    public String request(String id) throws BadRequest;
+    public String request(String id) throws BadRequest, RemoteException;
     /**
      * Method giving the list of new messages
      * @param id
@@ -28,6 +31,6 @@ public interface Function {
      * @throws UnloggedUserException 
      * @throws BadRequest 
      */
-    public String[] getMessage(String id) throws UnloggedUserException, BadRequest;
+    public String[] getMessage(String id) throws UnloggedUserException, BadRequest, RemoteException;
     
 }
