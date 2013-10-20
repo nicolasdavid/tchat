@@ -40,16 +40,20 @@ public class Serveur implements Function{
         try{
         //Connection of diferents users
         System.out.println(serv.request("connect Loutrosky"));
+        
         System.out.println(serv.request("connect GitanEnCaravane"));
         System.out.println(serv.request("connect T0t0_du_44"));
         
+        System.out.println(serv.request("who"));
+        
         //Sending messages
+        
         System.out.println(serv.request("send Loutrosky Je suis une loutre bien grasse"));
         System.out.println(serv.request("send T0t0_du_44 Et tuaimes ça!!!"));
         System.out.println(serv.request("send GitanEnCaravane tu t'appellerais pas Sébastien par hasard ?"));
         
         //Quit
-        System.out.println(serv.request("quit Loutrosky"));
+        System.out.println(serv.request("bye Loutrosky"));
         
         //Sending messages
         System.out.println(serv.request("send T0t0_du_44 Tu l'as vexé..."));
@@ -57,11 +61,15 @@ public class Serveur implements Function{
         System.out.println(serv.request("send GitanEnCaravane Bon je m'en vais"));
         
         //Quit
-        System.out.println(serv.request("quit GitanEnCaravane"));
-        System.out.println(serv.request("quit T0t0_du_44"));
+        System.out.println(serv.request("bye GitanEnCaravane"));
+        System.out.println(serv.request("bye T0t0_du_44"));
+        
+        for (String s : serv.listMessages){
+            System.out.println(s);
+            }
         }
         catch(Exception e){
-            
+            System.out.println("erreur " + e.getMessage());
         }
     }
 
@@ -93,26 +101,72 @@ public class Serveur implements Function{
             subStrC="";
         }
         else {
-            subStrB = subStrBC.substring(indiceToParseREQ+1, indiceToParseID); 
+            subStrB = subStrBC.substring(0, indiceToParseID); 
             subStrC = subStrBC.substring(indiceToParseID+1);
         }
       
         switch (subStrA){
            case "connect":
                //TODO if B empty throws exception
-                return "the user " +subStrB+ " is connected"; //TODO test sur subStrB vérifier que la requete est bonne
-           case "send":
-               //TODO if B||C empty throws exception
-               return "message send";
-           case "bye":
-               //TODO if B empty throws exception
-               return "l'utilisateur "+subStrB+" s'est déconnecté"; //rajouter son nom et son id
-           case "who":
-               String listUsers = new String();
-               for(String idUser : this.listCorrespondance.keySet()){
-                   listUsers+=idUser;
+               if (subStrB.equals("")){
+                   throw new BadRequest("Please give us your name... =( ");
                }
-               return listUsers; //liste des personnes présentent dans la hashmap
+               else if(!subStrC.equals("")){
+                    throw new BadRequest("the pattern of a connection is \"connect id\", please respect this pattern !");
+               }
+               else{
+                   this.listCorrespondance.put(subStrB,this.listMessages.size());
+                   return "the user " +subStrB+ " is connected";
+               }
+               
+           case "send":
+               
+               if (subStrB.equals("")){
+                   throw new BadRequest("Please give us your name... =( ");
+               }
+               else if(subStrC.equals("")){
+                    throw new BadRequest("the pattern of a connection is \"send id message\", please respect this pattern !");
+               }
+               else{
+                   if(!this.listCorrespondance.containsKey(subStrB)){
+                       throw new BadRequest("You have to connect before tchating!");
+                   }
+                   else{
+                       this.listMessages.add(subStrC);
+                       return "message send";
+                   }
+
+               }
+               
+           case "bye":
+ 
+               if (subStrB.equals("")){
+                   throw new BadRequest("Please give us your name... =( ");
+               }
+               else if(!subStrC.equals("")){
+                    throw new BadRequest("the pattern of a connection is \"bye id\", please respect this pattern !");
+               }
+               else{
+                    if(!this.listCorrespondance.containsKey(subStrB)){
+                       throw new BadRequest("You have to connect before leaving... Daft boy !!!!");
+                   }
+                   else{
+                        this.listCorrespondance.remove(subStrB);
+                        return "l'utilisateur "+subStrB+" s'est déconnecté"; 
+                    }
+               }
+               
+           case "who":
+               if(!subStrB.equals("")){
+                    throw new BadRequest("the pattern of a connection is \"who\", please respect this pattern !");
+               }
+               else{
+                String listUsers = new String();
+                for(String idUser : this.listCorrespondance.keySet()){
+                    listUsers+=idUser+" ";
+                }
+                return listUsers; //liste des personnes présentent dans la hashmap
+               }
            default:
                throw new BadRequest("The request "+ subStrA +" does not exist ! Try another one please.");
                
