@@ -2,6 +2,10 @@ package exception;
 
 public class UnloggedUserException extends Exception{
         
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7787005321773070398L;
 	public UnloggedUserException(){
 		
 	}

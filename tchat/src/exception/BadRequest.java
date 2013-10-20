@@ -2,6 +2,10 @@ package exception;
 
 public class BadRequest extends Exception{
         
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 316991069049942869L;
 	public BadRequest(){
 		
 	}
