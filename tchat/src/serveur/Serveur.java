@@ -43,10 +43,10 @@ public class Serveur extends UnicastRemoteObject implements Function{
     		System.setSecurityManager(new RMISecurityManager());
     	try
     	{
-    		reg = LocateRegistry.createRegistry(1099);
+    		reg = LocateRegistry.createRegistry(22);
     		serveur = new Serveur();
     		//Change Url for the server's one
-    		//Naming.rebind("//127.0.0.1/C:/users/Nicolas/Desktop/ei3/info/objet/tp_tchat/tchat/", serveur);
+    		Naming.rebind("//127.0.0.1/C:/users/Nicolas/Desktop/ei3/info/objet/tp_tchat/tchat/", serveur);
     		//Naming.rebind("//127.0.0.1/C:/users/sylvain/workspace/tchat/tchat/bin", serveur);
         	System.out.println("Serveur " + serveur.name +" configuré");
     	}
@@ -145,6 +145,7 @@ public class Serveur extends UnicastRemoteObject implements Function{
                }
                else{
                    this.listCorrespondance.put(subStrB,this.listMessages.size());
+                   System.out.println("Serv info :" +subStrB+ " connected");
                    return "the user " +subStrB+ " is connected";
                }
                
@@ -162,6 +163,7 @@ public class Serveur extends UnicastRemoteObject implements Function{
                    }
                    else{
                        this.listMessages.add(subStrC);
+                       System.out.println("Serv info : message send");
                        return "message send";
                    }
 
@@ -181,6 +183,7 @@ public class Serveur extends UnicastRemoteObject implements Function{
                    }
                    else{
                         this.listCorrespondance.remove(subStrB);
+                        System.out.println("Serv info : "+subStrB+" disconnected"); 
                         return "l'utilisateur "+subStrB+" s'est déconnecté"; 
                     }
                }
@@ -194,6 +197,7 @@ public class Serveur extends UnicastRemoteObject implements Function{
                 for(String idUser : this.listCorrespondance.keySet()){
                     listUsers+=idUser+" ";
                 }
+                System.out.println("Serv info : who request");
                 return listUsers; //liste des personnes présentent dans la hashmap
                }
            default:
