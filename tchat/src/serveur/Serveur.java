@@ -1,32 +1,34 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package serveur;
 
-import exception.BadRequest;
 import interfaces.Function;
 
+import java.rmi.Naming;
+import java.rmi.RMISecurityManager;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import exception.BadRequest;
 import exception.UnloggedUserException;
 
 /**
  *
  * @author Nicolas & Sylvain
  */
-public class Serveur implements Function{
+public class Serveur extends UnicastRemoteObject implements Function{
 
-    
-    
-    protected String name ;
+	private static final long serialVersionUID = -6816583950234559142L;
+	private static Registry reg;
+	protected String name ;
     protected ArrayList<Thread> listThreads;
     protected ArrayList<String> listMessages;
     protected HashMap<String,Integer> listCorrespondance; //the "String" represents the last message received by the user number "Integer"
     
-    public Serveur(){
+    public Serveur() throws RemoteException{
       this.name="Call me daddy";
       this.listThreads = new ArrayList<Thread>();
       this.listMessages = new ArrayList<String>();
@@ -34,8 +36,26 @@ public class Serveur implements Function{
     }
     
     public static void main(String[] args){
-        Serveur serv = new Serveur();
-        
+    	Serveur serveur;
+    	
+    	System.out.println("Mise en place du security manager");
+    	if(System.getSecurityManager() == null)
+    		System.setSecurityManager(new RMISecurityManager());
+    	try
+    	{
+    		reg = LocateRegistry.createRegistry(1090);
+    		serveur = new Serveur();
+    		//Change Url for the server's one
+    		Naming.rebind("//127.0.0.1/C:/Users/Sylvain/workspace/", serveur);
+        	System.out.println("Serveur " + serveur.name +" configuré");
+    	}
+    	catch(Exception e)
+     	{
+    		System.out.println("\nProblème !!\n\n " + e.toString());
+			e.printStackTrace();
+     	}
+    	
+        /* Test for the server
         //Test
         try{
         //Connection of diferents users
@@ -78,7 +98,7 @@ public class Serveur implements Function{
         }
         catch(Exception e){
             System.out.println("erreur " + e.getMessage());
-        }
+        }*/
     }
 
     
