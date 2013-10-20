@@ -18,6 +18,8 @@ import exception.UnloggedUserException;
  * @author Nicolas & Sylvain
  */
 public class Serveur implements Function{
+
+    
     
     protected String name ;
     protected ArrayList<Thread> listThreads;
