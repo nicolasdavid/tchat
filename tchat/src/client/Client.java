@@ -79,7 +79,6 @@ public class Client extends QWidget {
     	   catch (Exception e){
     		   e.printStackTrace();
     	   }
-
            label.setText(label.text()+"\n"+"Please enter your name to enter the tchat");
        }
        
