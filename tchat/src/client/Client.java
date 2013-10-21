@@ -73,12 +73,13 @@ public class Client extends QWidget {
     	   
     	   try{
     		   //f=(Function)Naming.lookup("//192.168.0.17/C:/users/Nicolas/Desktop/ei3/info/objet/tp_tchat/tchat/");
-    		   f=(Function) Naming.lookup("//127.0.0.1/C:/users/sylvain/workspace/tchat/tchat/bin");
+    		   f=(Function) Naming.lookup("//127.0.0.1/daddyServer");
     		   label.setText(label.text()+"\n"+"Server found");
     	   }
     	   catch (Exception e){
     		   e.printStackTrace();
     	   }
+
            label.setText(label.text()+"\n"+"Please enter your name to enter the tchat");
        }
        

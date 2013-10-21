@@ -47,7 +47,7 @@ public class Serveur extends UnicastRemoteObject implements Function{
     		serveur = new Serveur();
     		//Change Url for the server's one
     		//Naming.rebind("//127.0.0.1/C:/users/Nicolas/Desktop/ei3/info/objet/tp_tchat/tchat/", serveur);
-    		Naming.rebind("//127.0.0.1/C:/users/sylvain/workspace/tchat/tchat/bin", serveur);
+    		Naming.rebind("//127.0.0.1/daddyServer", serveur);
         	System.out.println("Serveur " + serveur.name +" configuré");
     	}
     	catch(Exception e)
@@ -104,6 +104,7 @@ public class Serveur extends UnicastRemoteObject implements Function{
 
     
     public String request(String str) throws BadRequest{
+        System.out.println("pouet");
         char parseChar = ' ';
         int indiceToParseREQ;
         int indiceToParseID;
