@@ -20,20 +20,26 @@ public class Client {
        
        public Client(){
     	   try{
-    		   //f=(Function)Naming.lookup("//127.0.0.1/C:/users/Nicolas/Desktop/ei3/info/objet/tp_tchat/tchat/");
-    		   f=(Function) Naming.lookup("//192.168.0.33/C:/users/sylvain/workspace/tchat/tchat/bin");
+    		  f=(Function)Naming.lookup("//127.0.0.1/C:/");
+    		  // f=(Function) Naming.lookup("//192.168.0.33/C:/users/sylvain/workspace/tchat/tchat/bin");
     		   System.out.println("Client connecté");
     	   }
     	   catch (Exception e){
     		   e.printStackTrace();
     	   }
+
            Scanner sc = new Scanner(System.in);
+
            System.out.println("Please enter your name to enter the tchat");
+           
            this.id = sc.nextLine();
+          
            try{
+               System.out.println("TOTO5");
                System.out.println(f.request("connect "+this.id));
            }
            catch(Exception e){
+               System.out.println("TOTO6");
                System.out.println(e.getMessage());
            }
        }
