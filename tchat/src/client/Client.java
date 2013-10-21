@@ -9,7 +9,6 @@ import interfaces.Function;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 
-import com.trolltech.qt.QThread;
 import com.trolltech.qt.core.QTimer;
 import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QHBoxLayout;
@@ -33,33 +32,35 @@ public class Client extends QWidget {
        private boolean connected;
 
        protected QVBoxLayout mainLayout;
-       protected QVBoxLayout bpLayout;
        protected QHBoxLayout sendLayout;
        protected QLabel label;
        protected QTextEdit te;
        protected QPushButton bp;
-       protected QPushButton bpMess;
+       
+       private QTimer timer;
        
        public Client(){
+    	   
+    	   timer = new QTimer();
+    	   timer.timeout.connect(this, "setText()");
+    	   timer.setInterval(1000);
+    	   //timer.setSingleShot(false);
+    	   timer.start();
+    	   
     	   connected=false;
     	   label = new QLabel("");
     	   te = new QTextEdit("Enter your request");
     	   bp = new QPushButton("Send");
     	   bp.clicked.connect(this, "sendRequest()");
-    	   bpMess = new QPushButton("Actu");
-    	   bpMess.clicked.connect(this, "setText()");
 
     	   mainLayout = new QVBoxLayout();
-    	   bpLayout = new QVBoxLayout();
     	   sendLayout = new QHBoxLayout();
   	       label.setFixedHeight(500);
   	       te.setFixedHeight(100);
   	       bp.resize(200, 200);
     	   
     	   this.sendLayout.addWidget(te);
-    	   this.sendLayout.addLayout(bpLayout);
-    	   this.bpLayout.addWidget(bp);
-    	   this.bpLayout.addWidget(bpMess);
+    	   this.sendLayout.addWidget(bp);
     	   this.mainLayout.addWidget(label);
     	   this.mainLayout.addLayout(sendLayout);
     	   this.setLayout(mainLayout);
