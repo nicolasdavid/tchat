@@ -1,4 +1,4 @@
-/serveur
 /client
-/interfaces
 /exception
+/interfaces
+/serveur
